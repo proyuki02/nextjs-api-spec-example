@@ -1,10 +1,17 @@
 import { type InferGetStaticPropsType, type GetStaticProps } from "next";
 import { createSwaggerSpec } from "next-swagger-doc";
+import { useState, useEffect } from "react";
 import { RedocStandalone } from 'redoc';
 
 export default function RedocExample({
   spec,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [clientSide, setClientSide] = useState(false);
+  useEffect(() => setClientSide(true), []);
+  if (!clientSide) {
+    return null;
+  }
+  
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   return <RedocStandalone spec={spec} />;
 }
